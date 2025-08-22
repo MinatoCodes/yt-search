@@ -1,4 +1,4 @@
-// search-single.js
+
 import express from "express";
 import ytSearch from "yt-search";
 
@@ -6,10 +6,10 @@ const app = express();
 
 app.get("/api/ytsearch", async (req, res) => {
   const { query } = req.query.q;
-  if (!query) return res.status(400).json({ success: false, error: "Missing search query" });
+  if (!q) return res.status(400).json({ success: false, error: "Missing search query" });
 
   try {
-    const results = await ytSearch(query);
+    const results = await ytSearch(q);
     const video = results.videos[0]; // first result only
 
     if (!video) {
