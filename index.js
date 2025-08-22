@@ -1,16 +1,15 @@
-
-import express from "express";
-import ytSearch from "yt-search";
+const express = require("express");
+const ytSearch = require("yt-search");
 
 const app = express();
 
 app.get("/api/ytsearch", async (req, res) => {
-  const { query } = req.query.q;
+  const q = req.query.q; // use q instead of query
   if (!q) return res.status(400).json({ success: false, error: "Missing search query" });
 
   try {
     const results = await ytSearch(q);
-    const video = results.videos[0]; // first result only
+    const video = results.videos[0]; // only first result
 
     if (!video) {
       return res.json({ success: false, error: "No video found" });
@@ -34,4 +33,3 @@ app.get("/api/ytsearch", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`YouTube Search API running on port ${PORT}`));
-  
